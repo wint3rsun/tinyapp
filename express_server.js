@@ -1,3 +1,15 @@
+const generateRandomString = function() {
+  const alphaNumerics = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+  let randomStr = "";
+
+  for (let counter = 0; counter < 6; counter++) {
+    const index = Math.floor((Math.random() * alphaNumerics.length)); //generate a random number between 0 and length of alphaNumeric
+    randomStr += alphaNumerics[index];
+  }
+
+  return randomStr;
+}
+
 const express = require('express');
 const app = express();
 const PORT = 8080; //default port 8080
@@ -39,8 +51,6 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
