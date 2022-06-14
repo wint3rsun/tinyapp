@@ -8,7 +8,7 @@ const generateRandomString = function() {
   }
 
   return randomStr;
-}
+};
 
 const express = require('express');
 const app = express();
