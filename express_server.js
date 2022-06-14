@@ -50,9 +50,17 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]};
+  const shortURL = req.params.shortURL;
+  const longURL = urlDatabase[shortURL];
+  const templateVars = { shortURL , longURL};
   res.render("urls_show", templateVars);
+});
 
+app.post("/urls/:shortURL", (req, res) => {
+  let updatedURL = req.body.newLongURL;
+  urlDatabase[req.params.shortURL] = updatedURL;
+  console.log("after edit database: ", urlDatabase);
+  res.redirect("/urls");
 });
 
 app.get("/u/:shortURL", (req, res) => {
