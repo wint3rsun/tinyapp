@@ -17,6 +17,9 @@ const PORT = 8080; //default port 8080
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
+let cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 app.set('view engine', 'ejs');
 
 const urlDatabase = {
@@ -70,6 +73,12 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.post("/urls/:shortURL/delete", (req, res) => {
   delete urlDatabase[req.params.shortURL];
+  res.redirect("/urls");
+});
+
+app.post("/login", (req, res) => {
+  const {username} = req.body;
+  res.cookie("username", username);
   res.redirect("/urls");
 });
 
