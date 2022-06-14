@@ -24,7 +24,10 @@
           <tr>
             <td><a href="#"><%= url %></a></td>
             <td><a href=<%= urls[url] %>><%= urls[url] %></a></td>
-            <td><form class="form-inline" method="POST" action="/urls/<%= url %>/delete"><button type="button" class="btn btn-outline-danger">Delete</button></form></td>
+            <td>
+              <form class="form-inline" method="POST" action="/urls/<%= url %>/delete"><button type="submit" class="btn btn-outline-danger">Delete</button>
+              </form>
+            </td>
           </tr>
         <% } %>
       </tbody>
