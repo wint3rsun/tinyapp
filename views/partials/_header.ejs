@@ -5,14 +5,40 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
+      <div class="navbar-nav justify-content-left">
         <a class="nav-item nav-link" href="/urls">My URLs</a>
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
-        <form action="/login" method="POST">
-          <input type="text" name="username" placeholder="Username">
-          <button class="btn btn-outline-dark">Login</button>
-        </form>
       </div>
+      <div class="navbar-nav d-flex d-none d-md-none">
+        <% if (username) { %>
+          <form action="/logout" method="POST">
+            <div class="from-group mb-2">
+              <p>Logged In As: <%= username %></p>
+              <button class="btn btn-outline-danger">Logout</button>
+            </div>
+          </form>
+          <%} else { %>
+            <form action="/login" method="POST">
+              <div class="from-group mb-2">
+                <input type="text" name="username" placeholder="Username">
+                <button class="btn btn-outline-dark">Login</button>
+              </div>
+            </form>
+        <% } %>
+      </div>
+    </div>
+    <div class="justify-content-right d-none d-md-block">
+      <% if (username) { %>
+        <form action="/logout" method="POST">
+          <p>Logged In As: <%= username %></p>
+          <button class="btn btn-outline-danger">Logout</button>
+        </form>
+        <%} else { %>
+          <form action="/login" method="POST">
+            <input type="text" name="username" placeholder="Username">
+            <button class="btn btn-outline-dark">Login</button>
+          </form>
+      <% } %>
     </div>
   </nav>
 </header>
