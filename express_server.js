@@ -122,8 +122,9 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  const {username} = req.body;
-  res.cookie("username", username);
+  const { email, password } = req.body;
+  console.log(`Email: ${email}\nPassword: ${password}`);
+  //res.cookie("username", username);
   res.redirect("/urls");
 });
 
