@@ -10,10 +10,10 @@
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
       <div class="navbar-nav d-flex d-none d-md-none">
-        <% if (username) { %>
+        <% if (user) { %>
           <form action="/logout" method="POST">
             <div class="from-group mb-2">
-              <p>Logged In As: <%= username %></p>
+              <p>Logged In As: <%= user.email %></p>
               <button class="btn btn-outline-danger">Logout</button>
             </div>
           </form>
@@ -21,6 +21,7 @@
             <form action="/login" method="POST">
               <div class="from-group mb-2">
                 <input type="text" name="username" placeholder="Username">
+                <input type="password" class="form-control" name="password" placeholder="Password">
                 <button class="btn btn-outline-dark">Login</button>
               </div>
             </form>
@@ -28,14 +29,15 @@
       </div>
     </div>
     <div class="justify-content-right d-none d-md-block">
-      <% if (username) { %>
+      <% if (user) { %>
         <form action="/logout" method="POST">
-          <p>Logged In As: <%= username %></p>
+          <p>Logged In As: <%= user.email %></p>
           <button class="btn btn-outline-danger">Logout</button>
         </form>
         <%} else { %>
           <form action="/login" method="POST">
             <input type="text" name="username" placeholder="Username">
+            <input type="password" class="form-control" name="password" placeholder="Password">
             <button class="btn btn-outline-dark">Login</button>
           </form>
       <% } %>
