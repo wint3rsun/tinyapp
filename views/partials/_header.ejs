@@ -9,7 +9,7 @@
         <a class="nav-item nav-link" href="/urls">My URLs</a>
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
-      <div class="navbar-nav d-flex d-none d-md-none">
+      <div class="navbar-nav d-flex-row d-none d-md-none">
         <% if (user) { %>
           <form action="/logout" method="POST">
             <div class="from-group mb-2">
@@ -18,38 +18,22 @@
             </div>
           </form>
           <%} else { %>
-            <form action="/login" method="GET">
-              <div class="from-group mb-2">
-                <button class="btn btn-outline-dark">Login</button>
-              </div>
-            </form>
-            <form action="/register" method="GET">
-              <div class="from-group mb-2">
-                <button class="btn btn-outline-dark">Register</button>
-              </div>
-            </form>
-        <% } %>
+            <a class="nav-item nav-link " href="/login">Login</a>
+            <a class="nav-item nav-link p-2" href="/register">Register</a>
+            <% } %>
       </div>
     </div>
-    <div class="justify-content-right d-none d-md-block">
-      <% if (user) { %>
-        <form action="/logout" method="POST">
-          <div class="from-group mb-2">
-            <p>Logged In As: <%= user.email %></p>
-            <button class="btn btn-outline-danger">Logout</button>
-          </div>
-        </form>
-        <%} else { %>
-          <form action="/login" method="GET">
-            <div class="from-group mb-2">
-              <button class="btn btn-outline-dark">Login</button>
-            </div>
-          </form>
-          <form action="/register" method="GET">
-            <div class="from-group mb-2">
-              <button class="btn btn-outline-dark">Register</button>
-            </div>
-          </form>
+    <div class="navbar-nav justify-content-right d-none d-md-block">
+          <% if (user) { %>
+            <form action="/logout" method="POST">
+              <div class="from-group mb-2">
+                <p>Logged In As: <%= user.email %></p>
+                <button class="btn btn-outline-danger">Logout</button>
+              </div>
+            </form>
+            <%} else { %>
+              <a class="nav-item nav-link" href="/login">Login</a>
+              <a class="nav-item nav-link" href="/register">Register</a>
       <% } %>
     </div>
   </nav>
