@@ -15,13 +15,22 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+const findEmailInUsers = (emailAddress) => {
+  for (const user in users) {
+    if (users[user].email === emailAddress) {
+      return true;
+    }
+  }
+  return false;
+}
+
 const users = {
   "userRandomID": {
     id: "userRandomID",
     email: "user@example.com",
     password: "purple-monkey-dinosaur"
   },
-  "userRandomID": {
+  "user2RandomID": {
     id: "user2RandomID",
     email: "user2@example.com",
     password: "dishwasher-funk"
@@ -57,7 +66,6 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
-
 app.post("/urls", (req, res) => {
   const longURL = req.body.longURL;
   const shortURL = generateRandomString();
@@ -76,13 +84,21 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   const id = generateRandomString();
   const { email, password } = req.body;
-  users[id] = {
-    id,
-    email,
-    password
+
+  if (email === "" | password === "") {
+    res.status(400).send("email or password is empty.");
+  } else if (findEmailInUsers(email)) {
+    res.status(400).send("email already exists");
+  }else {
+    users[id] = {
+      id,
+      email,
+      password
+    };
+
+    res.cookie("user_id", id);
+    res.redirect("/urls");
   };
-  res.cookie("user_id", id);
-  res.redirect("/urls");
 });
 
 app.get("/urls/new", (req, res) => {
