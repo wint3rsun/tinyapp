@@ -183,8 +183,12 @@ app.post("/urls/:shortURL", (req, res) => {
 });
 
 app.get("/u/:shortURL", (req, res) => {
-  const longURL = urlDatabase[req.params.shortURL].longURL;
-  res.redirect(longURL);
+  const url = urlDatabase[req.params.shortURL];
+
+  if(url) {
+    return res.redirect(url.longURL);
+  }
+  return res.status(404).send("Page not found! Invalid short url.");
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
