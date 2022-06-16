@@ -67,11 +67,14 @@ app.get("/urls", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  const longURL = req.body.longURL;
-  const shortURL = generateRandomString();
-  urlDatabase[shortURL] = longURL;
-  console.log(urlDatabase);
-  res.redirect(`/urls/${shortURL}`);
+  if(req.cookies["user_id"]) {
+    const longURL = req.body.longURL;
+    const shortURL = generateRandomString();
+    urlDatabase[shortURL] = longURL;
+    console.log(urlDatabase);
+    return res.redirect(`/urls/${shortURL}`);
+  }
+  return res.status(401).send("Unauthorized! Please log in.")
 });
 
 app.get("/register", (req, res) => {
