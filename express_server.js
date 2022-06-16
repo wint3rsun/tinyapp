@@ -15,10 +15,10 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
-const findEmailInUsers = (emailAddress) => {
+const findUserbyEmail = (emailAddress) => {
   for (const user in users) {
     if (users[user].email === emailAddress) {
-      return true;
+      return user;
     }
   }
   return false;
@@ -85,10 +85,12 @@ app.post("/register", (req, res) => {
   const id = generateRandomString();
   const { email, password } = req.body;
 
+  console.log(`result of findUserByEmail is: ${findUserbyEmail(email)}`);
+
   if (email === "" | password === "") {
     res.status(400).send("email or password is empty.");
-  } else if (findEmailInUsers(email)) {
-    res.status(400).send("email already exists");
+  } else if (findUserbyEmail(email)) {
+    res.status(400).send("email already exists!");
   }else {
     users[id] = {
       id,
@@ -105,14 +107,23 @@ app.get("/login", (req, res) => {
   const templateVars = {
     user: users[req.cookies["user_id"]],
   };
+  console.log(users);
   res.render("urls_login", templateVars);
 });
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  console.log(`Email: ${email}\nPassword: ${password}`);
-  //res.cookie("username", username);
-  res.redirect("/urls");
+  const userID = findUserbyEmail(email);
+
+  if (userID) {
+    if(users[userID].password === password) {
+      res.cookie("user_id", userID);
+      return res.redirect("/urls");
+    }
+    return res.status(403).send("Password does not match records!");
+  }
+
+  return res.status(403).send(`User ${email} not found!`);
 });
 
 app.get("/urls/new", (req, res) => {
