@@ -32,9 +32,9 @@ const findUserUrls = (user_id) => {
   return userURLDatabase;
 }
 
-const findUserbyEmail = (emailAddress) => {
-  for (const user in users) {
-    if (users[user].email === emailAddress) {
+const getUserbyEmail = (email, database) => {
+  for (const user in database) {
+    if (database[user].email === email) {
       return user;
     }
   }
@@ -121,7 +121,7 @@ app.post("/register", (req, res) => {
 
   if (email === "" | password === "") {
     return res.status(400).send("email or password is empty.");
-  } else if (findUserbyEmail(email)) {
+  } else if (getUserbyEmail(email, users)) {
     return res.status(400).send("email already exists!");
   }else {
     users[id] = {
@@ -145,7 +145,7 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  const userID = findUserbyEmail(email);
+  const userID = getUserbyEmail(email, users);
 
   if (userID) {
     if(bycrypt.compareSync(password, users[userID].hashedPassword)) {
