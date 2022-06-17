@@ -10,7 +10,7 @@ const generateRandomString = function() {
   return randomStr;
 };
 
-const findUserUrls = (user_id) => {
+const findUserUrls = (user_id, urlDatabase) => {
   const userURLDatabase = {};
   for (const shortURL in urlDatabase) {
     if(urlDatabase[shortURL].userID === user_id) {

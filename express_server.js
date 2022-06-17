@@ -26,6 +26,8 @@ const express = require('express');
 const app = express();
 const PORT = 8080; //default port 8080
 
+const { generateRandomString, findUserUrls, getUserbyEmail } = require('./helpers');
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -54,7 +56,7 @@ app.get("/urls.json", (req, res) => {
 app.get("/urls", (req, res) => {
   const templateVars = {
     user: users[req.session.user_id],
-    urls: findUserUrls(req.session.user_id)
+    urls: findUserUrls(req.session.user_id, urlDatabase)
   };
   console.log(templateVars);
   res.render("urls_index", templateVars);
@@ -127,7 +129,7 @@ app.post("/login", (req, res) => {
 app.get("/urls/new", (req, res) => {
   const templateVars = {
     user: users[req.session.user_id],
-    urls: findUserUrls(req.session.user_id)
+    urls: findUserUrls(req.session.user_id, urlDatabase)
   };
   if(templateVars.user) {
     return res.render("urls_new", templateVars);
