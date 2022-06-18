@@ -113,13 +113,16 @@ app.get("/urls/new", (req, res) => {
 
 app.get("/urls/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL;
-  const longURL = urlDatabase[shortURL].longURL;
+  const longURL = (urlDatabase[shortURL]) ? urlDatabase[shortURL].longURL: undefined;
   const templateVars = {
     user: users[req.session.user_id],
     shortURL,
     longURL
   };
-  if(templateVars.user) {
+  if(!longURL) {
+    return res.status(404).send("Page not found!");
+  }
+  if(templateVars.user && (urlDatabase[shortURL].userID === req.session.user_id)) {
     return res.render("urls_show", templateVars);
   }
   return res.status(403).send("Unathorized!");
