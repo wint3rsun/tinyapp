@@ -1,50 +1,24 @@
-const urlDatabase = {
-    b6UTxQ: {
-        longURL: "https://www.tsn.ca",
-        userID: "userRandomID"
-    },
-    i3BoGr: {
-        longURL: "https://www.google.ca",
-        userID: "user2RandomID"
-    }
-};
-
-const users = {
-  "userRandomID": {
-    id: "userRandomID",
-    email: "user@example.com",
-    password: "purple-monkey-dinosaur"
-  },
-  "user2RandomID": {
-    id: "user2RandomID",
-    email: "user2@example.com",
-    password: "dishwasher-funk"
-  },  
-};
-
 const express = require('express');
-const app = express();
-const PORT = 8080; //default port 8080
+const bodyParser = require('body-parser');
+let cookieSession = require('cookie-session');
+const bycrypt = require('bcryptjs');
+//let cookieParser = require('cookie-parser');
 
 const { generateRandomString, findUserUrls, getUserbyEmail } = require('./helpers');
+const {urlDatabase, users, PORT} = require('./constants');
 
-const bodyParser = require('body-parser');
+const app = express();
+
 app.use(bodyParser.urlencoded({extended: true}));
-
-//let cookieParser = require('cookie-parser');
-//app.use(cookieParser());
-
-let cookieSession = require('cookie-session');
 app.use(cookieSession({
   name: 'session',
   keys: ['key1']
 }));
-
-const bycrypt = require('bcryptjs');
+//app.use(cookieParser());
 
 app.set('view engine', 'ejs');
 
-
+// ROUTES BELOW
 app.get("/", (req, res) => {
   res.redirect("/urls");
 });
@@ -185,7 +159,6 @@ app.post("/logout", (req, res) => {
   res.redirect("/urls");
 });
 
-
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
+  console.log(`TinyApp listening on port ${PORT}!`);
 });
