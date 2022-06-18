@@ -13,13 +13,13 @@ const generateRandomString = function() {
 const findUserUrls = (user_id, urlDatabase) => {
   const userURLDatabase = {};
   for (const shortURL in urlDatabase) {
-    if(urlDatabase[shortURL].userID === user_id) {
+    if (urlDatabase[shortURL].userID === user_id) {
       userURLDatabase[shortURL] = urlDatabase[shortURL].longURL;
     }
   }
 
   return userURLDatabase;
-}
+};
 
 const getUserbyEmail = (email, database) => {
   for (const user in database) {
@@ -27,13 +27,12 @@ const getUserbyEmail = (email, database) => {
       return user;
     }
   }
-  return false;
-}
+  return undefined;
+};
 
 
 module.exports = {
   generateRandomString,
   findUserUrls,
   getUserbyEmail,
-
-}
+};
